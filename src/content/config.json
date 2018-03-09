@@ -1,8 +1,0 @@
-{
-  "siteTitle": "Qualendar",
-  "siteDescription": "Quick calendar demo",
-  "breakpoints": {
-    "desktop": 1024,
-    "mobile": 600
-  }
-}

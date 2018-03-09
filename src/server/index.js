@@ -6,7 +6,7 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import template from './template'
-import config from '../content/config.json'
+import config from '../../content/config.json'
 import kytConfig from '../../kyt.config'
 import App from '../components/App'
 
@@ -53,8 +53,6 @@ server.get('*', (req, res) => {
       template({
         root: html,
         title: config.siteTitle,
-        description: config.siteDescription,
-        googleTrackingId: config.googleTrackingId,
         manifestJSBundle: getClientAsset({ name: 'manifest.js', req }),
         mainJSBundle: getClientAsset({ name: 'main.js', req }),
         vendorJSBundle: getClientAsset({ name: 'vendor.js', req }),
