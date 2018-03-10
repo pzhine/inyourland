@@ -3,6 +3,7 @@ import express from 'express'
 import compression from 'compression'
 import path from 'path'
 import React from 'react'
+import cors from 'cors'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import template from './template'
@@ -35,6 +36,12 @@ server.use(compression())
 
 // Setup the public directory so that we can server static assets.
 server.use(express.static(path.join(process.cwd(), KYT.PUBLIC_DIR)))
+
+// Setup the receiver directory so that we can server static assets.
+server.use('/receiver', express.static(path.join(process.cwd(), 'receiver')))
+
+// Setup the media directory with CORS.
+server.use('/media', cors(), express.static(path.join(process.cwd(), 'media')))
 
 // Setup server side routing.
 server.get('*', (req, res) => {

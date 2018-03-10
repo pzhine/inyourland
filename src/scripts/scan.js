@@ -1,7 +1,9 @@
-var scanner = require('chromecast-scanner')
+import getReceivers from '../lib/cast/getReceivers'
 
-scanner(function(err, service) {
-  console.log('chromecast %s running on: %s',
-    service.name,
-    service.data)
-})
+getReceivers()
+  .then(media => {
+    console.log(JSON.stringify(media, null, 2))
+  })
+  .catch(err => {
+    console.log(err)
+  })

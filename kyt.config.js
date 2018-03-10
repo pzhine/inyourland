@@ -54,6 +54,15 @@ module.exports = {
       ],
     }
     appConfig.module.rules.unshift(svgRules)
+
+    // appConfig.devServer = {
+    //   ...(appConfig.devServer || {}),
+    //   contentBase: [
+    //     ...((appConfig.devServer && appConfig.devServer.contentBase) || []),
+    //     path.join(__dirname, 'receiver'),
+    //   ],
+    // }
+
     return appConfig
   },
   modifyJestConfig: config => {
