@@ -1,19 +1,22 @@
 import 'babel-polyfill'
 import express from 'express'
+import http from 'http'
+import socketio from 'socket.io'
 import compression from 'compression'
 import path from 'path'
 import React from 'react'
 import cors from 'cors'
-import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import template from './template'
 import config from '../../content/config.json'
 import kytConfig from '../../kyt.config'
-import App from '../components/App'
+import startScenes from '../lib/scene/start'
 
 const clientAssets = require(KYT.ASSETS_MANIFEST) // eslint-disable-line import/no-dynamic-require
 const port = process.env.PORT || parseInt(KYT.SERVER_PORT, 10)
-const server = express()
+
+const expressApp = express()
+const server = http.createServer(expressApp)
 
 const getClientAsset = ({ name, req }) => {
   if (!clientAssets[name]) {
@@ -29,45 +32,41 @@ const getClientAsset = ({ name, req }) => {
 }
 
 // Remove annoying Express header addition.
-server.disable('x-powered-by')
+expressApp.disable('x-powered-by')
 
 // Compress (gzip) assets in production.
-server.use(compression())
+expressApp.use(compression())
 
-// Setup the public directory so that we can server static assets.
-server.use(express.static(path.join(process.cwd(), KYT.PUBLIC_DIR)))
+// Setup the public directory so that we can serve static assets.
+expressApp.use(express.static(path.join(process.cwd(), KYT.PUBLIC_DIR)))
 
-// Setup the receiver directory so that we can server static assets.
-server.use('/receiver', express.static(path.join(process.cwd(), 'receiver')))
+// Setup the receiver directory
+expressApp.use('/receiver', express.static(path.join(process.cwd(), 'receiver')))
 
 // Setup the media directory with CORS.
-server.use('/media', cors(), express.static(path.join(process.cwd(), 'media')))
+expressApp.use('/media', cors(), express.static(path.join(process.cwd(), 'media')))
 
-// Setup server side routing.
-server.get('*', (req, res) => {
-  const context = {}
-
-  const html = renderToString(
-    <StaticRouter location={req.url} context={context}>
-      <App />
-    </StaticRouter>
+// Setup server-side routing.
+expressApp.get('*', (req, res) =>
+  res.status(200).send(
+    template({
+      title: config.siteTitle,
+      manifestJSBundle: getClientAsset({ name: 'manifest.js', req }),
+      mainJSBundle: getClientAsset({ name: 'main.js', req }),
+      vendorJSBundle: getClientAsset({ name: 'vendor.js', req }),
+      mainCSSBundle: getClientAsset({ name: 'main.css', req }),
+    })
   )
+)
 
-  if (context.url) {
-    res.redirect(302, context.url)
-  } else {
-    res.status(200).send(
-      template({
-        root: html,
-        title: config.siteTitle,
-        manifestJSBundle: getClientAsset({ name: 'manifest.js', req }),
-        mainJSBundle: getClientAsset({ name: 'main.js', req }),
-        vendorJSBundle: getClientAsset({ name: 'vendor.js', req }),
-        mainCSSBundle: getClientAsset({ name: 'main.css', req }),
-      })
-    )
-  }
+// initialize socket listener
+const io = socketio(server)
+io.on('connection', socket => {
+  console.log('client connected', socket)
 })
+ 
+// start scene player and sync
+startScenes({ io })
 
 server.listen(port, () => {
   console.log(`✅  server started on port: ${port}`) // eslint-disable-line no-console

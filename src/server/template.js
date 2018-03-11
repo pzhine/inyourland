@@ -28,7 +28,7 @@ export default vo => `
   </head>
 
   <body>
-    <div id="root"><div>${vo.root}</div></div>
+    <div id="root"></div>
     ${getDeferScript(vo.manifestJSBundle)}
     ${getDeferScript(vo.vendorJSBundle)}
     ${getDeferScript(vo.mainJSBundle)}

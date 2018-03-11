@@ -4,5 +4,11 @@
     "thumbFilename": "blackduck.png",
     "locationId": "wavehill",
     "subjectId": "americanblackduck"
+  },
+  {
+    "startTime": 10000,
+    "thumbFilename": "blackduck.png",
+    "locationId": "wavehill",
+    "subjectId": "americanblackduck"
   }
 ]

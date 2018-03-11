@@ -3,7 +3,7 @@ Client
 
 Startup
 -------
-- should query server for current scene
+- should query server for current scene and set `currentSceneIndex`
 - should open a socketIO connection to server to listen for scene changes
 
 On user interaction
@@ -19,9 +19,14 @@ actiontag can be:
   - `DETAIL_NAV` - user navigated within details
   - `REGISTER_CANCEL` - user cancelled phone input
 
+On ession timer
+---------------
+- should query server for current scene and set `currentSceneIndex`
+- should redirect to navigator screen
+
 On scene change
 ---------------
-- should updated `currentSceneIndex`
+- should update `currentSceneIndex`
 - should advance UI to current scene if there's no active session
 
 On Like
