@@ -1,8 +1,3 @@
-import React from 'react'
+import Container from '../Container'
 
-const Text = ({ style, children }) =>
-  <div style={style}>
-    {children}
-  </div>
-
-export default Text
+export default Container

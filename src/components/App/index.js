@@ -4,13 +4,14 @@ import store from '../../redux/configureStore'
 import styles from './styles'
 
 import Text from '../Text'
-import Container from '../Container'
+import Container from '../View'
 
-const App = () =>
+const App = () => (
   <Provider store={store}>
-    <Container style={styles.app}>
+    <Container style={styles}>
       <Text>Hello world</Text>
     </Container>
   </Provider>
+)
 
 export default App

@@ -1,13 +1,22 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router'
-import store from '../src/redux/configureStore'
+import realStore from '../src/redux/configureStore'
 
-const Decorate = ({ story }) =>
+const containerStyle = {
+  padding: '24px',
+  backgroundColor: '#333',
+  height: '100vh'
+}
+
+const Decorate = ({ story, style = {}, store = realStore }) =>
   <MemoryRouter>
     <Provider store={store}>
-      {story}
+      <div style={{ ...containerStyle, ...style }}>
+        {story}
+      </div>
     </Provider>
   </MemoryRouter>
 
 export default Decorate
+

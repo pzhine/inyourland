@@ -3,6 +3,7 @@ Client
 
 Startup
 -------
+- should read mediaId from cookie or present list of media if no cookie
 - should query server for current scene and set `currentSceneIndex`
 - should open a socketIO connection to server to listen for scene changes
 

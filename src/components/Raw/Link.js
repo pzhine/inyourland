@@ -7,7 +7,9 @@ const Link = ({ to, html, history }) => {
     e.preventDefault()
     history.push(to)
   }
-  return <a onClick={onClick} href={to} dangerouslySetInnerHTML={{ __html: html }} />
+  return (
+    <a onClick={onClick} href={to} dangerouslySetInnerHTML={{ __html: html }} />
+  )
 }
 
 export default withRouter(Link)
