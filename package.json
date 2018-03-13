@@ -24,6 +24,7 @@
     "react-router": "4.2.0",
     "react-router-dom": "^4.2.2",
     "react-svg-loader": "^2.1.0",
+    "react-swipeable-views": "^0.12.13",
     "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
@@ -65,7 +66,7 @@
     "lint-script": "kyt lint-script",
     "lint-style": "kyt lint-style",
     "kyt:help": "kyt --help",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -h 0.0.0.0 -p 6006",
     "build-storybook": "build-storybook"
   }
 }

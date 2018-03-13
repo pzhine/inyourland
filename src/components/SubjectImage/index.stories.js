@@ -1,13 +1,26 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Decorate from '../../../.storybook/Decorate'
 import SubjectImage from './'
 import Image from '../Image'
+import { mixins } from '../../shared-styles'
+
+const containerStyle = {
+  ...mixins.centerBoth,
+  backgroundColor: '#333',
+  height: '100vh',
+}
+
+const Decorate = ({ story }) => <div style={containerStyle}>{story}</div>
 
 storiesOf('SubjectImage', module)
   .addDecorator(story => <Decorate story={story()} />)
-  .add('image only', () => (
+  .add('default', () => (
     <SubjectImage>
-      <Image src="http://placekitten.com/g/300/200" />
+      <Image src="http://fillmurray.com/300/200" />
+    </SubjectImage>
+  ))
+  .add('active', () => (
+    <SubjectImage isActive>
+      <Image src="http://fillmurray.com/300/200" />
     </SubjectImage>
   ))
